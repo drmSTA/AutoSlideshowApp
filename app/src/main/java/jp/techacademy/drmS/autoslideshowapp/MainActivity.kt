@@ -38,7 +38,7 @@ class MainActivity : AppCompatActivity(), View.OnClickListener  {
         if(haveAuthericationToAccessStorage()){
             initializeMediaList()
         }else{
-            Toast.makeText(this, "ALLOW ME to perform slideshow", Toast.LENGTH_LONG).show()
+            Toast.makeText(this, "Gallery画像へのアクセス権限を設定下さい", Toast.LENGTH_LONG).show()
         }
     }
 
@@ -106,16 +106,13 @@ class MainActivity : AppCompatActivity(), View.OnClickListener  {
                     updateImage()
                 }
                 view == button4previous -> {
-                    // valiable range of imageIndexNow is inbetween 0 - imageList.size
-                    // (prooved it by handling of onClick method)
-                    // in case of an implement for an unexpected input (like user input),
-                    // following code should be review properly
+                    // ユーザー入力等アプリ外から画像の指定を受け付ける場合には適切な validation を実行すること
                     imageIndexNow = (--imageIndexNow + imageList.size)%imageList.size
                     updateImage()
                 }
             }
         }else{
-            Toast.makeText(this, "No Pictures and/or No permission to Storage", Toast.LENGTH_LONG).show()
+            Toast.makeText(this, "Gallery画像へのアクセス権限がないか、画像が無い為表示できません", Toast.LENGTH_LONG).show()
         }
     }
 
@@ -127,7 +124,7 @@ class MainActivity : AppCompatActivity(), View.OnClickListener  {
 
     fun controlSlideShow(){
         if(timer4slideShow == null){
-            // not yet started -> getting started slideshow
+            // スライドショー開始
             button4previous.isEnabled = false;
             button4next.isEnabled = false;
             button4playControl.text = "停止"
@@ -140,7 +137,7 @@ class MainActivity : AppCompatActivity(), View.OnClickListener  {
                 }
             }, DELAY_ON_SLIDESHOW, INTERVAL_OF_SLIDESHOW)
         }else{
-            // under playing slideshow -> stop
+            // スライドショー停止
             button4previous.isEnabled = true;
             button4next.isEnabled = true;
             button4playControl.text = "再生"
